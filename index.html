@@ -4,12 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#2a2b2e">
   <title>Stephen Miller | Tech Support</title>
-  <meta name="description" content="Résumé site for Stephen Miller.">
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="js/menu.js" defer></script>
-  <script src="js/scroll.js" defer></script>
-  <script src="js/particles.js" defer></script>
+  <meta name="description" content="Stephen Miller, Tech Support Agent. Remote IT support resume: experience, projects, courses, skills, and contact.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232a2b2e'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='system-ui,Segoe UI,Arial,sans-serif' font-size='28' font-weight='700' fill='%239cc3e6'%3ESM%3C/text%3E%3C/svg%3E">
+  <!-- Bump the ?v= number whenever a CSS or JS file changes, so browsers fetch the new copy -->
+  <link rel="stylesheet" href="css/styles.css?v=6">
+  <script src="js/menu.js?v=6" defer></script>
+  <script src="js/scroll.js?v=6" defer></script>
+  <script src="js/particles.js?v=6" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -23,7 +26,7 @@
           <li><a href="#about">About</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#projects">Projects</a></li>
-          <li><a href="#courses">Courses and certifications</a></li>
+          <li><a href="#courses">Courses</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#education">Education</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -39,23 +42,42 @@
       <p class="hero-title">Tech Support Agent</p>
       <p class="location">Remote</p>
       <div class="button-row">
-        <a class="button button-primary" href="assets/Stephen-Miller-Resume.pdf">Download résumé (PDF)</a>
+        <a class="button button-primary" href="assets/Stephen-Miller-Resume.pdf">Download resume (PDF)</a>
         <a class="button button-secondary" href="#contact">Contact</a>
       </div>
     </section>
 
-    <section class="wrap" id="about" aria-labelledby="about-h">
+    <section class="wrap rail" id="about" aria-labelledby="about-h">
       <h2 id="about-h">About</h2>
-      <p>I provide remote IT support for employees at a large insurance company, resolving both physical and software issues across more than 5,000 applications. I focus on solving the problem the first time and leaving the caller feeling heard. I’m also interested in using AI to help support teams resolve repeat issues faster.</p>
+      <p class="lead">I provide remote IT support for employees at a large insurance company, resolving both physical and software issues across more than 5,000 applications. I focus on solving the problem the first time and leaving the caller feeling heard. I’m also interested in using AI to help support teams resolve repeat issues faster.</p>
+      <dl class="stats">
+        <div class="stat">
+          <dt>employees supported</dt>
+          <dd data-count="50000">50,000</dd>
+        </div>
+        <div class="stat">
+          <dt>applications supported</dt>
+          <dd data-count="5000" data-suffix="+">5,000+</dd>
+        </div>
+        <div class="stat">
+          <dt>NPS for the year</dt>
+          <dd data-count="97" data-suffix="%">97%</dd>
+        </div>
+      </dl>
     </section>
 
-    <section class="wrap" id="experience" aria-labelledby="experience-h">
+    <section class="wrap rail" id="experience" aria-labelledby="experience-h">
       <h2 id="experience-h">Experience</h2>
       <div class="timeline">
 
       <article class="card">
-        <h3>Tech Support Agent, Liberty Mutual</h3>
-        <p class="meta">October 2022 to Present. Fully remote.</p>
+        <div class="card-head">
+          <div>
+            <h3>Tech Support Agent</h3>
+            <p class="org">Liberty Mutual</p>
+          </div>
+          <p class="when">October 2022 to Present · Fully remote</p>
+        </div>
         <ul>
           <li>Supports IT issues for 50,000 employees across physical and software issues.</li>
           <li>Supports over 5,000 applications.</li>
@@ -76,8 +98,13 @@
       </article>
 
       <article class="card">
-        <h3>Security Support &amp; Technical Service, Protection Unlimited, Memphis, TN</h3>
-        <p class="meta">May 2015 to 2022</p>
+        <div class="card-head">
+          <div>
+            <h3>Security Support &amp; Technical Service</h3>
+            <p class="org">Protection Unlimited · Memphis, TN</p>
+          </div>
+          <p class="when">May 2015 to 2022</p>
+        </div>
         <ul>
           <li>Responsible for handling emergency-level situations and choosing the safest course of action while prioritizing customer safety.</li>
           <li>Managed relations between customers, technicians, and law enforcement agents, and tracked interactions for account records.</li>
@@ -87,59 +114,74 @@
       </div>
     </section>
 
-    <section class="wrap" id="projects" aria-labelledby="projects-h">
+    <section class="wrap rail" id="projects" aria-labelledby="projects-h">
       <h2 id="projects-h">Projects</h2>
       <article class="card">
-        <h3>Teams Triage Bot</h3>
-        <p class="meta"><span class="status">Status: Designed</span></p>
+        <div class="card-head">
+          <h3>Teams Triage Bot</h3>
+          <p class="status">Status: Designed</p>
+        </div>
         <p>I designed a bot that reads a question posted in a Microsoft Teams support channel, searches past resolved threads for matching solutions, and returns the top options with links before a senior agent needs to step in.</p>
-        <p><strong>Goal:</strong> Resolve repeatable issues faster and reduce interruptions for senior staff.</p>
+        <p class="goal"><strong>Goal:</strong> Resolve repeatable issues faster and reduce interruptions for senior staff.</p>
       </article>
     </section>
 
-    <section class="wrap" id="courses" aria-labelledby="courses-h">
+    <section class="wrap rail" id="courses" aria-labelledby="courses-h">
       <h2 id="courses-h">Courses and certifications</h2>
-      <h3>Courses completed</h3>
-      <ul class="plain-list">
-        <li>Leadership for Non-managers</li>
-        <li>Leadership: Getting Started</li>
-        <li>Managing IT: Communication</li>
-        <li>HTML, CSS, and JavaScript: The Big Picture</li>
-      </ul>
-      <h3>Certificate</h3>
-      <ul class="plain-list">
-        <li>Google AI</li>
-      </ul>
+      <div class="skills-grid">
+        <div class="card">
+          <h3>Courses completed</h3>
+          <ul class="tile-list wide">
+            <li>Leadership for Non-managers</li>
+            <li>Leadership: Getting Started</li>
+            <li>Managing IT: Communication</li>
+            <li>HTML, CSS, and JavaScript: The Big Picture</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Certificate</h3>
+          <ul class="tile-list">
+            <li>Google AI</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <section class="wrap" id="skills" aria-labelledby="skills-h">
+    <section class="wrap rail" id="skills" aria-labelledby="skills-h">
       <h2 id="skills-h">Skills</h2>
       <div class="skills-grid">
         <div class="card">
           <h3>Tools</h3>
-          <ul class="chips">
+          <ul class="tile-list">
             <li>Word</li><li>Excel</li><li>Outlook</li><li>PowerPoint</li><li>Service Now</li><li>Claude</li><li>Gemini</li>
           </ul>
         </div>
         <div class="card">
           <h3>Support skills</h3>
-          <ul class="chips">
+          <ul class="tile-list">
             <li>Attention to detail</li><li>Multitasking</li><li>Independence</li><li>Flexible hours</li><li>Search engine research</li><li>Time Management</li><li>Customer Service</li><li>Critical thinking &amp; Problem solving</li>
           </ul>
         </div>
+        <!-- AI card is hidden until its text is written. To show it, replace
+             [PLACEHOLDER] with the real text and delete this comment's first and last lines.
         <div class="card">
           <h3>AI</h3>
           <p>[PLACEHOLDER]</p>
         </div>
+        -->
       </div>
     </section>
 
-    <section class="wrap" id="education" aria-labelledby="education-h">
+    <section class="wrap rail" id="education" aria-labelledby="education-h">
       <h2 id="education-h">Education</h2>
       <article class="card">
-        <h3>High School Diploma</h3>
-        <p>Gateway Christian School, Memphis, TN</p>
-        <p class="meta">May 2014</p>
+        <div class="card-head">
+          <div>
+            <h3>High School Diploma</h3>
+            <p class="org">Gateway Christian School · Memphis, TN</p>
+          </div>
+          <p class="when">May 2014</p>
+        </div>
       </article>
     </section>
   </main>
@@ -147,7 +189,9 @@
   <footer class="site-footer" id="contact">
     <div class="wrap">
       <h2>Contact</h2>
-      <p>Email: <a href="mailto:stephenscottm@gmail.com">stephenscottm@gmail.com</a></p>
+      <p class="contact-label">Email</p>
+      <p><a class="button button-secondary" href="mailto:stephenscottm@gmail.com">stephenscottm@gmail.com</a></p>
+      <p class="to-top"><a href="#top">Back to top</a></p>
     </div>
   </footer>
 </body>
