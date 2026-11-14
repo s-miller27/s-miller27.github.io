@@ -16,17 +16,49 @@
     });
   }
 
-  if ('IntersectionObserver' in window) {
-    var navObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) { setCurrent(entry.target.id); }
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    sections.forEach(function (s) { navObserver.observe(s); });
-    /* Back at the hero, no nav link is current. */
-    var hero = document.getElementById('top');
-    if (hero) { navObserver.observe(hero); }
+  /* A probe line slides from the top of the screen to the bottom as the page
+     scrolls from start to end. The current section is the last one whose top
+     has passed the line. This way short sections at the very bottom
+     (Education, Contact) still get their turn, which a fixed line never
+     reaches. Above the first section (the hero) no link is current. */
+  var currentId = null;
+  var spyLocked = false;
+  function spy() {
+    if (spyLocked) { return; }
+    var vh = window.innerHeight;
+    var max = Math.max(document.documentElement.scrollHeight - vh, 1);
+    var probe = vh * Math.min(window.pageYOffset / max, 1);
+    var id = '';
+    sections.forEach(function (s) {
+      if (s.getBoundingClientRect().top <= probe) { id = s.id; }
+    });
+    if (id !== currentId) { currentId = id; setCurrent(id); }
   }
+
+  /* Clicking a link to a section marks that section straight away and keeps
+     it marked while the page glides there, even if the page cannot scroll far
+     enough to put it at the top. The next manual scroll hands control back. */
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!link) { return; }
+    var id = link.getAttribute('href').slice(1);
+    spyLocked = true;
+    currentId = id;
+    setCurrent(id);
+  });
+  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (type) {
+    window.addEventListener(type, function () { spyLocked = false; }, { passive: true });
+  });
+
+  var spyTicking = false;
+  function onSpyScroll() {
+    if (spyTicking) { return; }
+    spyTicking = true;
+    window.requestAnimationFrame(function () { spyTicking = false; spy(); });
+  }
+  window.addEventListener('scroll', onSpyScroll, { passive: true });
+  window.addEventListener('resize', onSpyScroll);
+  spy();
 
   /* Everything below is motion. Skip it for people who ask for less. */
   if (reduceMotion) { return; }

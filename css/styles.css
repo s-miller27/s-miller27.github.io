@@ -404,6 +404,32 @@ p.status { margin: 0; }
 .to-top { margin: 1.5rem 0 0; }
 .to-top a { color: var(--muted); }
 
+/* Photo: not draggable, no image menu on right-click or long-press. The file
+   itself is only 320px, so there is no extra detail to zoom into. */
+.avatar {
+  pointer-events: none; -webkit-user-drag: none;
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+
+/* Round icon links (LinkedIn, GitHub) in the hero and the footer */
+.social { display: flex; justify-content: center; gap: 0.75rem; }
+.site-footer .social { margin-top: 1.25rem; }
+.icon-link, .site-footer a.icon-link {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; min-height: 0; line-height: 1; border-radius: 50%;
+  color: var(--text); background: var(--glass); border: 1px solid var(--glass-border);
+  transition: transform 0.12s ease-out, box-shadow 0.12s ease-out,
+    color 0.12s ease-out, border-color 0.12s ease-out;
+}
+.icon-link svg { width: 20px; height: 20px; fill: currentColor; }
+.icon-link:hover {
+  color: var(--accent); border-color: var(--accent); transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(156, 195, 230, 0.18);
+}
+@media (prefers-reduced-motion: reduce) {
+  .icon-link:hover { transform: none; }
+}
+
 /* ===== Hover states: no underlines; a quick lift and glow instead ===== */
 .nav-list a { transition: background-color 0.12s ease-out, color 0.12s ease-out; }
 .nav-list a:hover { background: var(--glass-strong); color: var(--accent); }
