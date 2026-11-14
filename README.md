@@ -5,9 +5,12 @@ Plain HTML, CSS, and JavaScript. No build step, no dependencies.
 ## Files
 
 - `index.html` – all content
-- `css/styles.css` – styles (light and dark via `prefers-color-scheme`)
+- `css/styles.css` – styles (single dark theme; the `prefers-color-scheme` block is commented out)
 - `js/menu.js` – mobile menu behavior
-- `assets/` – put `Stephen-Miller-Resume.pdf` here (not included)
+- `js/scroll.js` – current-section highlight in the nav, reveal on scroll, progress bar, timeline fill (motion parts are skipped under `prefers-reduced-motion`)
+- `js/particles.js` – decorative dots-and-lines background behind the hero (still image under `prefers-reduced-motion`)
+- `assets/Stephen-Miller-Resume.pdf` – the résumé download
+- `resume-print/resume.html` – print-styled résumé used to make the PDF. Open it in a browser, press Ctrl+P, choose **Save as PDF** with headers and footers off, and save over `assets/Stephen-Miller-Resume.pdf`. Keep its text in sync with `index.html`.
 
 ## Preview locally
 

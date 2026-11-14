@@ -1,14 +1,15 @@
 :root {
-  --bg: #f7f5fb;
-  --surface: #ece8f4;
-  --border: #857d96;
-  --text: #2a2535;
-  --muted: #5a5368;
-  --accent: #6a3fa0;
-  --on-accent: #f7f5fb;
-  --focus: #b45309;
+  --bg: #2a2b2e;
+  --surface: #36383c;
+  --border: #7d8087;
+  --text: #e4e5e7;
+  --muted: #bcbfc4;
+  --accent: #9cc3e6;
+  --on-accent: #14202c;
+  --focus: #f2c46d;
   --max: 960px;
 }
+/* Dark theme disabled for testing. To restore, remove the comment markers.
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #1f1b2b;
@@ -21,6 +22,7 @@
     --focus: #8ec5ff;
   }
 }
+*/
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -142,7 +144,155 @@ section.wrap { border-top: 1px solid var(--border); }
   .nav-list, .js .nav-list { display: flex; flex-direction: row; flex-wrap: wrap; width: auto; gap: .5rem; }
 }
 
+/* ===== Glass layer: translucent panels over soft color glows ===== */
+:root {
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-strong: rgba(255, 255, 255, 0.09);
+  --glass-border: rgba(255, 255, 255, 0.18);
+}
+html { scroll-padding-top: 8rem; }
+
+/* Soft glows behind everything. Decorative only; kept dim so text contrast holds. */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(48rem 32rem at 10% -8%, rgba(156, 195, 230, 0.12), transparent 65%),
+    radial-gradient(40rem 30rem at 96% 10%, rgba(167, 139, 250, 0.10), transparent 65%),
+    radial-gradient(46rem 30rem at 50% 108%, rgba(94, 200, 190, 0.08), transparent 65%);
+}
+
+.site-header {
+  position: sticky; top: 0; z-index: 5;
+  max-height: 100vh; overflow-y: auto;
+  background: rgba(42, 43, 46, 0.7);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.card:hover { transform: translateY(-2px); border-color: rgba(156, 195, 230, 0.55); }
+
+.menu-button { background: var(--glass-strong); border-color: var(--glass-border); border-radius: 10px; }
+.nav-list a { border-radius: 10px; }
+.nav-list a:hover { background: var(--glass-strong); }
+
+.hero { padding-top: 4.5rem; padding-bottom: 4rem; }
+section.wrap { border-top: 1px solid rgba(255, 255, 255, 0.08); }
+
+.button { border-radius: 12px; }
+.button-primary { box-shadow: 0 6px 20px rgba(156, 195, 230, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+.button-secondary { background: var(--glass); border-color: var(--glass-border); color: var(--text); }
+
+.metric {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+.chips li { background: var(--glass-strong); border-color: var(--glass-border); }
+.status { background: rgba(156, 195, 230, 0.12); border-color: rgba(156, 195, 230, 0.6); }
+
+.site-footer {
+  background: rgba(255, 255, 255, 0.04);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Fallbacks: no blur support, or the user asked for less transparency */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .card, .site-header, .site-footer { background: var(--surface); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .card, .site-header, .site-footer { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* ===== Scrollytelling ===== */
+
+/* Reading progress */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 4px; z-index: 20;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  transform-origin: 0 50%; transform: scaleX(0); pointer-events: none;
+}
+
+/* Background glows drift slowly as you scroll */
+body::before {
+  inset: -15vh 0;
+  transform: translate3d(0, calc(var(--sy, 0) * -0.12px), 0);
+  will-change: transform;
+}
+
+/* Reveal on scroll. Only hidden when JS is running, so content is never lost. */
+.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.js .reveal.in-view { opacity: 1; transform: none; }
+.js .card.reveal.in-view:hover { transform: translateY(-2px); }
+
+/* Experience timeline: the line fills as you read down the page */
+.timeline { position: relative; padding-left: 1.75rem; }
+.timeline::before, .timeline::after {
+  content: ""; position: absolute; left: 0.4rem; top: 0.5rem; bottom: 0.5rem;
+  width: 3px; border-radius: 3px;
+}
+.timeline::before { background: rgba(255, 255, 255, 0.16); }
+.timeline::after {
+  background: linear-gradient(var(--accent), #a78bfa);
+  transform-origin: top; transform: scaleY(var(--progress, 1));
+}
+.timeline .card { position: relative; }
+.timeline .card::before {
+  /* Centered on the 3px track: track center is 0.4rem + 1.5px from the timeline edge */
+  content: ""; position: absolute; top: 1.7rem; left: calc(-1.35rem - 9.5px);
+  box-sizing: border-box; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--bg);
+}
+
+/* Current section in the nav: underline as well as color */
+.nav-list a[aria-current="true"] { color: var(--accent); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+
+/* ===== Landing hero: centered, fills the first screen, constellation behind ===== */
+.hero {
+  min-height: calc(100vh - 6rem);
+  min-height: calc(100svh - 6rem);
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center;
+}
+.hero .button-row { justify-content: center; }
+.avatar {
+  width: clamp(120px, 34vw, 160px); height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover;
+  margin-bottom: 1.5rem;
+  border: 2px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+.hero h1 { font-weight: 600; letter-spacing: 0.01em; }
+.hero-particles {
+  position: absolute; top: 0; left: 0; width: 100%; z-index: -1; pointer-events: none;
+  /* Fade out toward the next section so the dots never sit behind body text */
+  -webkit-mask-image: linear-gradient(#000 75%, transparent);
+  mask-image: linear-gradient(#000 75%, transparent);
+}
+
+@media print {
+  .js .reveal { opacity: 1; transform: none; }
+  .scroll-progress, .hero-particles { display: none; }
+  .hero { min-height: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .card:hover { transform: none; }
+  body::before { transform: none; }
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
 }
